@@ -9,6 +9,7 @@ public:
 	int stories, height, width;
 	float storyHeight;
 	CubeTile ****tiles;
+	std::vector<Wall*>walls;
 	//player data
 	int currentPlayerFloor;
 	

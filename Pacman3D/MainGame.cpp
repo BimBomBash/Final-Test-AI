@@ -11,6 +11,7 @@
 #include "Window.h"
 #include "GameObject.h"
 #include "CubeTile.h"
+#include "Wall.h"
 #include "Stage.h"
 #include "MainGame.h"
 
@@ -107,7 +108,6 @@ void MainGame::ProcessInput()
 
 void MainGame::Update(int time)
 {
-	std::cout<<firstStage->currentPlayerFloor<<std::endl;
 	elapsedTime = time;
 	ProcessInput();
 	window->ClearWindow();

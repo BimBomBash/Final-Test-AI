@@ -14,6 +14,7 @@
 #include "GameObject.h"
 #include "Window.h"
 #include "CubeTile.h"
+#include "Wall.h"
 #include "Stage.h"
 #include "MainGame.h"
 

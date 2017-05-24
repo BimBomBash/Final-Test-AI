@@ -30,6 +30,9 @@ CubeTile::~CubeTile()
 void CubeTile::Draw()
 {
 	glPushMatrix();
+	if (type == STAIR) glColor3f(0, 0, 1);
+	else if (type == WALL) glColor3f(0, 1, 0);
+	else glColor3f(1, 0, 0);
 	glTranslatef(transform->position->x, transform->position->y, transform->position->z);
 	glTranslatef(-0.5, -0.5, -0.5);
 	glBegin(GL_QUADS);

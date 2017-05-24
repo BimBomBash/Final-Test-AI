@@ -5,8 +5,10 @@
 #include <iostream>
 #include <string.h>
 #include <string>
+#include <vector>
 #include "GameObject.h"
 #include "CubeTile.h"
+#include "Wall.h"
 #include "Stage.h"
 
 
@@ -24,6 +26,7 @@ void Stage::BuildMap(std::string map) {
 	}
 
 	int stringIndex = 0;
+
 	int h = 0;
 	do {
 		int i = 0;
@@ -48,6 +51,7 @@ void Stage::BuildMap(std::string map) {
 					tiles[h][i][j] = new CubeTile(j, 0 + storyHeight*h, i, 1, STAIR);
 					break;
 				}
+				tiles[h][i][j]->floorNumber = h;
 				if (stringIndex < map.length() - 1) stringIndex++;
 				j++;
 			} while (j < width && stringIndex < map.length());
@@ -55,6 +59,23 @@ void Stage::BuildMap(std::string map) {
 		} while (i < height);
 		h++;
 	} while (h < stories);
+
+	for (int h = 0; h < stories; h++) {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (tiles[h][i][j]->type == WALL) {
+					bool left = true, up = true, right = true, down = true;
+					if (i == 0 || tiles[h][i - 1][j]->type != WALL) up = false;
+					if (i == height-1 || tiles[h][i + 1][j]->type != WALL) down = false;
+					if (j == 0 || tiles[h][i][j-1]->type != WALL) left = false;
+					if (i == width-1 || tiles[h][i][j+1]->type != WALL) right = false;
+					Wall *temp = new Wall(tiles[h][i][j], 1, 0.25, left, up, right, down);
+					temp->floorNumber = h;
+					walls.push_back(temp);
+				}
+			}
+		}
+	}
 }
 
 Stage::Stage()
@@ -94,5 +115,8 @@ void Stage::Draw()
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++)tiles[h][i][j]->Draw();
 		}
+	}
+	for (int i = 0; i < walls.size(); i++) {
+		if (walls[i]->floorNumber < currentPlayerFloor) walls[i]->Draw();
 	}
 }
