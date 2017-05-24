@@ -14,6 +14,7 @@
 #include "GameObject.h"
 #include "Window.h"
 #include "CubeTile.h"
+#include "Stage.h"
 #include "MainGame.h"
 
 float rTri = 0.1;
@@ -30,7 +31,9 @@ int main(int argc, char ** argv)
 	time_t start = clock();
 	float xLicht1 = 0;
 	if (window->initiated) {
-		glEnable(GL_LIGHTING);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
+		//(GL_LIGHTING);
 		glEnable(GL_LIGHT0);
 		float col[] = { 1.0,1.0,1.0,1.0 };
 		glLightfv(GL_LIGHT0, GL_SPECULAR, col);

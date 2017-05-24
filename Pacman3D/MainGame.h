@@ -6,8 +6,11 @@ class MainGame
 	float xOldMousePosition, xNewMousePosition;
 	int elapsedTime;
 	CubeTile * cubeTile;
+	std::string ReadMap(std::string filename);
 
 	float testRot;
+	std::string map;
+	Stage *firstStage;
 public:
 	void ProcessInput();
 	MainGame(Window * _window);

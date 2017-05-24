@@ -1,25 +1,17 @@
 #pragma once
 #include <glm.hpp>
-struct Vector3 {
-	float x, y, z;
-	Vector3(float _x, float _y, float _z) :x(_x), y(_y), z(_z) {};
-	static float DistanceXZ(Vector3 *a, Vector3 *b) {
-		return sqrt(a->x*a->x + a->z*a->z);
-	}
-	float DistanceXZto(Vector3 *a) {
-		return sqrt((x-a->x)*(x - a->x) + (z - a->z)*(z - a->z));
-	}
-};
 
 struct Transform {
-	//glm::vec3 *position;
-	Vector3 *position;
-	Vector3 *rotation;
-	Vector3 *scale;
+	glm::vec3 *position;
+	glm::vec3 *rotation;
+	glm::vec3 *scale;
 	Transform() {
-		position = new Vector3(0, 0, 0);
-		rotation = new Vector3(0, 0, 0);
-		scale = new Vector3(0, 0, 0);
+		position = new glm::vec3(0, 0, 0);
+		rotation = new glm::vec3(0, 0, 0);
+		scale = new glm::vec3(1, 1, 1);
+	}
+	float DistanceXZto(glm::vec3 * a) {
+		return sqrt((position-> x - a->x)*(position-> x - a->x) + (position-> z - a->z)*(position->z - a->z));
 	}
 };
 
