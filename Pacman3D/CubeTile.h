@@ -18,5 +18,7 @@ public:
 	~CubeTile();
 	void Draw();
 	void Update();
+
+	CubeTile *upTile, *downTile, *leftTile, *rightTile, *topTile,*belowTile;
 };
 

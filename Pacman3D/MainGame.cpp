@@ -13,6 +13,7 @@
 #include "CubeTile.h"
 #include "Wall.h"
 #include "Stage.h"
+#include "Pacman.h"
 #include "MainGame.h"
 
 
@@ -20,12 +21,11 @@ MainGame::MainGame(Window * _window)
 {
 	window = _window;
 	cubeTile = new CubeTile();
-	testRot = 0;
 	cubeTile->transform->position->z = -6;
-	//map = "OO XO | OX XO | OO XX";
 	map = ReadMap("Level1.txt");
-	firstStage = new Stage(3, 10, 10, map);
+	firstStage = new Stage(this, 3, 10, 10, map);
 	firstStage->PrintStage();
+	SetPlayer();
 }
 
 MainGame::~MainGame()
@@ -57,12 +57,16 @@ std::string MainGame::ReadMap(std::string filename)
 		data += *temp;
 	}
 
-	// write the data at the screen.
-	//std::cout << data << std::endl;
-
-	// close the opened file.
 	infile.close();
 	return data;
+}
+
+void MainGame::SetPlayer()
+{
+	currentPlayerFloor = firstStage->stories-1;
+	playerPosTileX = 0;
+	playerPosTileY = 0;
+	player = new Pacman(firstStage->tiles[currentPlayerFloor][playerPosTileY][playerPosTileX]);
 }
 
 void MainGame::ProcessInput()
@@ -73,14 +77,28 @@ void MainGame::ProcessInput()
 
 	//continuous-response keys
 	if (state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_W]) {
+		player->MoveForward();
 	}
 	if (state[SDL_SCANCODE_DOWN]||state[SDL_SCANCODE_S]) {
+		player->MoveBackward();
 	}
 	if (state[SDL_SCANCODE_LEFT] || state[SDL_SCANCODE_A]) {
-		if (firstStage->currentPlayerFloor<firstStage->stories)firstStage->currentPlayerFloor++;
+		player->MoveLeft();
 	}
 	if (state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D]) {
-		if (firstStage->currentPlayerFloor>1)firstStage->currentPlayerFloor--;
+		player->MoveRight();
+	}
+	if (state[SDL_SCANCODE_O]) {
+		if (currentPlayerFloor > 0) {
+			currentPlayerFloor--;
+			player->MoveDown();
+		}
+	}
+	if (state[SDL_SCANCODE_P]) {
+		if (currentPlayerFloor+1<firstStage->stories) {
+			currentPlayerFloor++;
+			player->MoveUp();
+		}
 	}
 	if (state[SDL_SCANCODE_SPACE]) {
 	}
@@ -110,14 +128,16 @@ void MainGame::Update(int time)
 {
 	elapsedTime = time;
 	ProcessInput();
+	
 	window->ClearWindow();
 	glLoadIdentity();
 	glTranslatef(0, -1, -20);
 	glRotatef(30, 1, 0, 0);
 	glRotatef(45, 0, 1, 0);
-	glTranslatef(-(firstStage->width-1) / 2, -(firstStage->currentPlayerFloor-1)*firstStage->stories/2,-firstStage->height/2);
+	glTranslatef(-(firstStage->width-1) / 2, -(currentPlayerFloor-1)*firstStage->stories/2,-firstStage->height/2);
 	firstStage->Draw();
+	player->Update();
 	window->SwapWindow();
-	SDL_Delay(100);
+	SDL_Delay(10);
 }
 

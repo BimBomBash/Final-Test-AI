@@ -9,6 +9,8 @@
 #include "GameObject.h"
 #include "CubeTile.h"
 #include "Wall.h"
+#include "Pacman.h"
+#include "MainGame.h"
 #include "Stage.h"
 
 
@@ -69,10 +71,16 @@ void Stage::BuildMap(std::string map) {
 					if (i == height-1 || tiles[h][i + 1][j]->type != WALL) down = false;
 					if (j == 0 || tiles[h][i][j-1]->type != WALL) left = false;
 					if (i == width-1 || tiles[h][i][j+1]->type != WALL) right = false;
-					Wall *temp = new Wall(tiles[h][i][j], 1, 0.25, left, up, right, down);
+					Wall *temp = new Wall(tiles[h][i][j], wallHeight, 0.25, left, up, right, down);
 					temp->floorNumber = h;
 					walls.push_back(temp);
 				}
+				if (i > 0) tiles[h][i][j]->upTile = tiles[h][i - 1][j];
+				if (i < height - 1) tiles[h][i][j]->downTile = tiles[h][i + 1][j];
+				if (j > 0) tiles[h][i][j]->leftTile = tiles[h][i][j - 1];
+				if (j < width - 1) tiles[h][i][j]->rightTile = tiles[h][i][j + 1];
+				if (h > 0) tiles[h][i][j]->belowTile = tiles[h - 1][i][j];
+				if (h < stories - 1) tiles[h][i][j]->topTile = tiles[h + 1][i][j];
 			}
 		}
 	}
@@ -87,14 +95,15 @@ Stage::~Stage()
 {
 }
 
-Stage::Stage(int _stories, int _height, int _width, std::string map)
+Stage::Stage(MainGame *_maingame, int _stories, int _height, int _width, std::string map)
 {
 	stories = _stories;
 	height = _height;
 	width = _width;
 	storyHeight = 2;
+	wallHeight = 0.5f;
 	BuildMap(map);
-	currentPlayerFloor = stories;
+	mainGame = _maingame;
 }
 
 void Stage::PrintStage()
@@ -110,13 +119,13 @@ void Stage::PrintStage()
 
 void Stage::Draw()
 {
-	for (int h = 0; h < currentPlayerFloor; h++) {
+	for (int h = 0; h <= mainGame->currentPlayerFloor; h++) {
 		glColor3f(0.3*(h + 1), 0, 0);
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++)tiles[h][i][j]->Draw();
 		}
 	}
 	for (int i = 0; i < walls.size(); i++) {
-		if (walls[i]->floorNumber < currentPlayerFloor) walls[i]->Draw();
+		if (walls[i]->floorNumber <= mainGame->currentPlayerFloor) walls[i]->Draw();
 	}
 }

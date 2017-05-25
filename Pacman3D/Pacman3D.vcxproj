@@ -153,6 +153,7 @@
     <ClInclude Include="CubeTile.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="MainGame.h" />
+    <ClInclude Include="Pacman.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="CubeTile.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="Pacman3D.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">

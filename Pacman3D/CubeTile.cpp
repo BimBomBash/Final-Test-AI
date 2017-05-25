@@ -21,6 +21,10 @@ CubeTile::CubeTile(float _x, float _y, float _z, float _scale, Type _type)
 	transform->position = new glm::vec3(_x, _y, _z);
 	transform->scale = new glm::vec3(_scale, _scale, _scale);
 	type = _type;
+	downTile = nullptr;
+	upTile = nullptr;
+	leftTile = nullptr;
+	rightTile = nullptr;
 }
 
 CubeTile::~CubeTile()
