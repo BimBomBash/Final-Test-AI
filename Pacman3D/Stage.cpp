@@ -36,11 +36,18 @@ void Stage::BuildMap(std::string map) {
 		do {
 			int j = 0;
 			do {
-				while ((map[stringIndex] != '0' && map[stringIndex] != 'O' && map[stringIndex] != 'o' && map[stringIndex] != 'X'&& map[stringIndex] != 'S') && stringIndex < map.length()) {
+				while ((map[stringIndex] != 'P' && map[stringIndex] != '0' && map[stringIndex] != 'O' && map[stringIndex] != 'o' && map[stringIndex] != 'X'&& map[stringIndex] != 'S') && stringIndex < map.length()) {
 					stringIndex++;
 				}
 				switch (map[stringIndex])
 				{
+				case 'P':
+					stageMap[h][i][j] = 4;
+					tiles[h][i][j] = new CubeTile(j, 0 + storyHeight*h, i, 1, ROAD);
+					playerStartFloor = h;
+					playerStartX = j;
+					playerStartY = i;
+					break;
 				case '0':
 					stageMap[h][i][j] = 1;
 					tiles[h][i][j] = new CubeTile(j, 0 + storyHeight*h, i, 1, ROAD);
@@ -96,6 +103,7 @@ void Stage::BuildMap(std::string map) {
 			}
 		}
 	}
+	//mainGame->SetPlayer();
 }
 
 Stage::Stage()

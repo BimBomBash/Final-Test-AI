@@ -24,10 +24,10 @@ MainGame::MainGame(Window * _window)
 	cubeTile = new CubeTile();
 	cubeTile->transform->position->z = -6;
 	map = ReadMap("Level1.txt");
+	playerScore = 0;
 	firstStage = new Stage(this, 3, 10, 10, map);
 	firstStage->PrintStage();
 	SetPlayer();
-	playerScore = 0;
 }
 
 MainGame::~MainGame()
@@ -65,15 +65,15 @@ std::string MainGame::ReadMap(std::string filename)
 
 void MainGame::SetPlayer()
 {
-	currentPlayerFloor = firstStage->stories-1;
-	playerPosTileX = 0;
-	playerPosTileY = 0;
+	currentPlayerFloor = firstStage->playerStartFloor;
+	playerPosTileX = firstStage->playerStartX;
+	playerPosTileY = firstStage->playerStartY;
 	player = new Pacman(this,firstStage->tiles[currentPlayerFloor][playerPosTileY][playerPosTileX]);
 }
 
 void MainGame::CheckPlayerScore()
 {
-	if (player->currentTile->type == ROAD && !player->currentTile->food->wasEaten) {
+	if (player->currentTile->type == ROAD && player->currentTile->food!= nullptr &&!player->currentTile->food->wasEaten) {
 		if (player->currentTile->food->isBig) playerScore += 20;
 		else playerScore += 10;
 		std::cout << playerScore << std::endl;

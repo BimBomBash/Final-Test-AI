@@ -5,7 +5,6 @@ class Pacman;
 class MainGame
 {
 	Window * window;
-	float xOldMousePosition, xNewMousePosition;
 	int elapsedTime;
 	CubeTile * cubeTile;
 	std::string ReadMap(std::string filename);
@@ -15,10 +14,10 @@ class MainGame
 
 	//player data
 	Pacman *player;
-	void SetPlayer();
 	int playerScore;
 	void CheckPlayerScore();
 public:
+	void SetPlayer();
 	int currentPlayerFloor;
 	int playerPosTileX;
 	int playerPosTileY;

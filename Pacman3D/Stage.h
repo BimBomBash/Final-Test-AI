@@ -7,6 +7,7 @@ class Stage:public GameObject
 	MainGame *mainGame;
 public:
 	//stage settings
+	int playerStartFloor, playerStartY, playerStartX;
 	int ***stageMap;
 	int stories, height, width;
 	float storyHeight;
