@@ -5,15 +5,41 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <time.h>
 #include <algorithm>
 #include <fstream>
 #include "GameObject.h"
 #include "CubeTile.h"
+#include "MainGame.h"
 #include "Pacman.h"
 
 
+void Pacman::changeMesh()
+{
+	if (mouthOpened) {
+		mouthOpened = false;
+		object = LoadObject("PacmanMouthClose.obj");
+	}
+	else {
+		mouthOpened = true;
+		object = LoadObject("PacmanMouthOpen.obj");
+	}
+	startTime = clock();
+}
+
+void Pacman::checkStair()
+{
+	if (currentTile->type == STAIR && !isInStair) {
+		isInStair = true;
+		if (currentTile->belowTile!=nullptr && currentTile->belowTile->type == STAIR) MoveDown();
+		else if (currentTile->topTile != nullptr && currentTile->topTile->type == STAIR) MoveUp();
+	}
+	if (currentTile->type != STAIR && isInStair) isInStair = false;
+}
+
 void Pacman::MoveUp()
 {
+	mainGame->currentPlayerFloor++;
 	std::cout << currentTile->transform->position->y << std::endl;
 	currentTile = currentTile->topTile;
 	transform->position->y = currentTile->transform->position->y;
@@ -22,8 +48,7 @@ void Pacman::MoveUp()
 
 void Pacman::MoveRight()
 {
-	if (currentTile->rightTile != nullptr && currentTile->rightTile->type == ROAD) {
-		std::cout << "Moving Right, MOTHERFUCKER" << std::endl;
+	if (currentTile->rightTile != nullptr && currentTile->rightTile->type != WALL) {
 		rotation = 270;
 		if (transform->position->x < currentTile->rightTile->transform->position->x) {
 			transform->position->x += speed;
@@ -37,6 +62,7 @@ void Pacman::MoveRight()
 
 void Pacman::MoveDown()
 {
+	mainGame->currentPlayerFloor--;
 	std::cout << currentTile->transform->position->y << std::endl;
 	currentTile = currentTile->belowTile;
 	transform->position->y = currentTile->transform->position->y;
@@ -45,8 +71,7 @@ void Pacman::MoveDown()
 
 void Pacman::MoveLeft()
 {
-	if (currentTile->leftTile != nullptr && currentTile->leftTile->type == ROAD) {
-		std::cout << "Moving Left, MOTHERFUCKER" << std::endl;
+	if (currentTile->leftTile != nullptr && currentTile->leftTile->type != WALL) {
 		rotation = 90;
 		if (transform->position->x > currentTile->leftTile->transform->position->x) {
 			transform->position->x -= speed;
@@ -60,8 +85,7 @@ void Pacman::MoveLeft()
 
 void Pacman::MoveForward()
 {
-	if (currentTile->upTile != nullptr && currentTile->upTile->type == ROAD) {
-		std::cout << "Moving Forward, MOTHERFUCKER" << std::endl;
+	if (currentTile->upTile != nullptr && currentTile->upTile->type != WALL) {
 		rotation = 0;
 		if (transform->position->z > currentTile->upTile->transform->position->z) {
 			transform->position->z -= speed;
@@ -75,8 +99,7 @@ void Pacman::MoveForward()
 
 void Pacman::MoveBackward()
 {
-	if (currentTile->downTile != nullptr && currentTile->downTile->type == ROAD) {
-		std::cout << "Moving Backward, MOTHERFUCKER" << std::endl;
+	if (currentTile->downTile != nullptr && currentTile->downTile->type != WALL) {
 		rotation = 180;
 		if (transform->position->z < currentTile->downTile->transform->position->z) {
 			transform->position->z += speed;
@@ -101,6 +124,10 @@ void Pacman::Draw()
 
 void Pacman::Update()
 {
+	checkStair();
+	if (((float)clock() - (float)startTime) / (float)CLOCKS_PER_SEC > mouthTimeIntervalinSeconds) {
+		changeMesh();
+	}
 	Draw();
 }
 
@@ -111,8 +138,9 @@ Pacman::Pacman()
 	currentTile = new CubeTile();
 }
 
-Pacman::Pacman(CubeTile * startTile)
+Pacman::Pacman(MainGame *_mainGame, CubeTile * startTile)
 {
+	mainGame = _mainGame;
 	object = LoadObject("PacmanMouthOpen.obj");
 	transform = new Transform();
 	currentTile = startTile;
@@ -122,6 +150,10 @@ Pacman::Pacman(CubeTile * startTile)
 	transform->position->z = currentTile->transform->position->z;
 	speed = 0.1;
 	rotation = 0;
+	startTime = clock();
+	mouthOpened = true;
+	mouthTimeIntervalinSeconds = 0.1;
+	isInStair = false;
 }
 
 

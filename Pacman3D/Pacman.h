@@ -1,5 +1,6 @@
 #pragma once
 class GameObject;
+class MainGame;
 enum MovingDirection {
 	UP, RIGHT, DOWN, LEFT
 };
@@ -11,6 +12,14 @@ class Pacman:public GameObject
 	CubeTile *prevTile;
 	MovingDirection moveDir;
 	float rotation;
+	bool mouthOpened;
+	float mouthTimeIntervalinSeconds;
+	time_t startTime;
+	bool isInStair;
+	MainGame *mainGame;
+
+	void changeMesh();
+	void checkStair();
 public:
 	int lifePoint;
 	CubeTile *currentTile;
@@ -24,7 +33,7 @@ public:
 	void Draw();
 	void Update();
 	Pacman();
-	Pacman(CubeTile * startTile);
+	Pacman(MainGame *_mainGame, CubeTile * startTile);
 	~Pacman();
 };
 

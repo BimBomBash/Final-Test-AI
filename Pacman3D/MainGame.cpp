@@ -14,6 +14,7 @@
 #include "Wall.h"
 #include "Stage.h"
 #include "Pacman.h"
+#include "Food.h"
 #include "MainGame.h"
 
 
@@ -26,6 +27,7 @@ MainGame::MainGame(Window * _window)
 	firstStage = new Stage(this, 3, 10, 10, map);
 	firstStage->PrintStage();
 	SetPlayer();
+	playerScore = 0;
 }
 
 MainGame::~MainGame()
@@ -66,7 +68,17 @@ void MainGame::SetPlayer()
 	currentPlayerFloor = firstStage->stories-1;
 	playerPosTileX = 0;
 	playerPosTileY = 0;
-	player = new Pacman(firstStage->tiles[currentPlayerFloor][playerPosTileY][playerPosTileX]);
+	player = new Pacman(this,firstStage->tiles[currentPlayerFloor][playerPosTileY][playerPosTileX]);
+}
+
+void MainGame::CheckPlayerScore()
+{
+	if (player->currentTile->type == ROAD && !player->currentTile->food->wasEaten) {
+		if (player->currentTile->food->isBig) playerScore += 20;
+		else playerScore += 10;
+		std::cout << playerScore << std::endl;
+		player->currentTile->DeleteFood();
+	}
 }
 
 void MainGame::ProcessInput()
@@ -87,18 +99,6 @@ void MainGame::ProcessInput()
 	}
 	if (state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D]) {
 		player->MoveRight();
-	}
-	if (state[SDL_SCANCODE_O]) {
-		if (currentPlayerFloor > 0) {
-			currentPlayerFloor--;
-			player->MoveDown();
-		}
-	}
-	if (state[SDL_SCANCODE_P]) {
-		if (currentPlayerFloor+1<firstStage->stories) {
-			currentPlayerFloor++;
-			player->MoveUp();
-		}
 	}
 	if (state[SDL_SCANCODE_SPACE]) {
 	}
@@ -128,7 +128,8 @@ void MainGame::Update(int time)
 {
 	elapsedTime = time;
 	ProcessInput();
-	
+	CheckPlayerScore();
+
 	window->ClearWindow();
 	glLoadIdentity();
 	glTranslatef(0, -1, -20);

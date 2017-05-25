@@ -16,6 +16,8 @@ class MainGame
 	//player data
 	Pacman *player;
 	void SetPlayer();
+	int playerScore;
+	void CheckPlayerScore();
 public:
 	int currentPlayerFloor;
 	int playerPosTileX;

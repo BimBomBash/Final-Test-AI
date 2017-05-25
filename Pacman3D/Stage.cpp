@@ -11,6 +11,7 @@
 #include "Wall.h"
 #include "Pacman.h"
 #include "MainGame.h"
+#include "Food.h"
 #include "Stage.h"
 
 
@@ -35,14 +36,24 @@ void Stage::BuildMap(std::string map) {
 		do {
 			int j = 0;
 			do {
-				while ((map[stringIndex] != 'O' && map[stringIndex] != 'X'&& map[stringIndex] != 'S') && stringIndex < map.length()) {
+				while ((map[stringIndex] != '0' && map[stringIndex] != 'O' && map[stringIndex] != 'o' && map[stringIndex] != 'X'&& map[stringIndex] != 'S') && stringIndex < map.length()) {
 					stringIndex++;
 				}
 				switch (map[stringIndex])
 				{
+				case '0':
+					stageMap[h][i][j] = 1;
+					tiles[h][i][j] = new CubeTile(j, 0 + storyHeight*h, i, 1, ROAD);
+					break;
 				case 'O':
 					stageMap[h][i][j] = 1;
 					tiles[h][i][j] = new CubeTile(j, 0 + storyHeight*h, i, 1, ROAD);
+					tiles[h][i][j]->food = new Food(true, tiles[h][i][j]->transform);
+					break;
+				case 'o':
+					stageMap[h][i][j] = 1;
+					tiles[h][i][j] = new CubeTile(j, 0 + storyHeight*h, i, 1, ROAD);
+					tiles[h][i][j]->food = new Food(false, tiles[h][i][j]->transform);
 					break;
 				case 'X':
 					stageMap[h][i][j] = 2;
@@ -71,6 +82,7 @@ void Stage::BuildMap(std::string map) {
 					if (i == height-1 || tiles[h][i + 1][j]->type != WALL) down = false;
 					if (j == 0 || tiles[h][i][j-1]->type != WALL) left = false;
 					if (i == width-1 || tiles[h][i][j+1]->type != WALL) right = false;
+				
 					Wall *temp = new Wall(tiles[h][i][j], wallHeight, 0.25, left, up, right, down);
 					temp->floorNumber = h;
 					walls.push_back(temp);
@@ -122,7 +134,7 @@ void Stage::Draw()
 	for (int h = 0; h <= mainGame->currentPlayerFloor; h++) {
 		glColor3f(0.3*(h + 1), 0, 0);
 		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++)tiles[h][i][j]->Draw();
+			for (int j = 0; j < width; j++)tiles[h][i][j]->Update();
 		}
 	}
 	for (int i = 0; i < walls.size(); i++) {

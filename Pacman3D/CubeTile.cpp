@@ -7,6 +7,7 @@
 #include <string>
 #include <algorithm>
 #include <fstream>
+#include "Food.h"
 #include "CubeTile.h"
 
 
@@ -21,6 +22,7 @@ CubeTile::CubeTile(float _x, float _y, float _z, float _scale, Type _type)
 	transform->position = new glm::vec3(_x, _y, _z);
 	transform->scale = new glm::vec3(_scale, _scale, _scale);
 	type = _type;
+	food = nullptr;
 	downTile = nullptr;
 	upTile = nullptr;
 	leftTile = nullptr;
@@ -80,6 +82,14 @@ void CubeTile::Draw()
 
 void CubeTile::Update()
 {
-	glTranslatef(0, 0, -4);
+	//glTranslatef(0, 0, -4);
+	if (food != nullptr) food->Update();
 	Draw();
+}
+
+void CubeTile::DeleteFood()
+{
+	food->wasEaten = true;
+	//if (food != nullptr)
+	//delete food,food=NULL;
 }
