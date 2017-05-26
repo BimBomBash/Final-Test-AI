@@ -1,7 +1,10 @@
 #pragma once
+#include <vector>
 class Window;
 class Stage;
 class Pacman;
+class Ghost;
+class CubeTile;
 class MainGame
 {
 	Window * window;
@@ -13,11 +16,15 @@ class MainGame
 	Stage *firstStage;
 
 	//player data
-	Pacman *player;
+	std::vector<Ghost*> ghost;
+	//Ghost *ghost;
 	int playerScore;
 	void CheckPlayerScore();
-public:
 	void SetPlayer();
+	void SetGhost();
+	Pacman *player;
+public:
+	Pacman *GetPlayer() { return player; }
 	int currentPlayerFloor;
 	int playerPosTileX;
 	int playerPosTileY;

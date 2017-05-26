@@ -150,9 +150,12 @@
     <Text Include="Level1.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChaseBehavior.h" />
     <ClInclude Include="CubeTile.h" />
     <ClInclude Include="Food.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Ghost.h" />
+    <ClInclude Include="GhostBehavior.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Pacman.h" />
     <ClInclude Include="resource.h" />
@@ -163,9 +166,12 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ChaseBehavior.cpp" />
     <ClCompile Include="CubeTile.cpp" />
     <ClCompile Include="Food.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="GhostBehavior.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="Pacman3D.cpp" />

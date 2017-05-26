@@ -36,7 +36,7 @@ void Stage::BuildMap(std::string map) {
 		do {
 			int j = 0;
 			do {
-				while ((map[stringIndex] != 'P' && map[stringIndex] != '0' && map[stringIndex] != 'O' && map[stringIndex] != 'o' && map[stringIndex] != 'X'&& map[stringIndex] != 'S') && stringIndex < map.length()) {
+				while ((map[stringIndex] != 'E' && map[stringIndex] != 'P' && map[stringIndex] != '0' && map[stringIndex] != 'O' && map[stringIndex] != 'o' && map[stringIndex] != 'X'&& map[stringIndex] != 'S') && stringIndex < map.length()) {
 					stringIndex++;
 				}
 				switch (map[stringIndex])
@@ -56,6 +56,11 @@ void Stage::BuildMap(std::string map) {
 					stageMap[h][i][j] = 1;
 					tiles[h][i][j] = new CubeTile(j, 0 + storyHeight*h, i, 1, ROAD);
 					tiles[h][i][j]->food = new Food(true, tiles[h][i][j]->transform);
+					break;
+				case 'E':
+					stageMap[h][i][j] = 1;
+					tiles[h][i][j] = new CubeTile(j, 0 + storyHeight*h, i, 1, ROAD);
+					enemyPos.push_back(new glm::vec3(h, i, j));
 					break;
 				case 'o':
 					stageMap[h][i][j] = 1;

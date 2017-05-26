@@ -13,6 +13,7 @@ public:
 	float storyHeight;
 	float wallHeight;
 	CubeTile ****tiles;
+	std::vector<glm::vec3*> enemyPos;
 	std::vector<Wall*>walls;
 	
 	Stage();

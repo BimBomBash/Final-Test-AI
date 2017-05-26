@@ -14,7 +14,10 @@
 #include "Wall.h"
 #include "Stage.h"
 #include "Pacman.h"
+#include "Ghost.h"
 #include "Food.h"
+#include "GhostBehavior.h"
+#include "ChaseBehavior.h"
 #include "MainGame.h"
 
 
@@ -28,6 +31,7 @@ MainGame::MainGame(Window * _window)
 	firstStage = new Stage(this, 3, 10, 10, map);
 	firstStage->PrintStage();
 	SetPlayer();
+	SetGhost();
 }
 
 MainGame::~MainGame()
@@ -71,6 +75,16 @@ void MainGame::SetPlayer()
 	player = new Pacman(this,firstStage->tiles[currentPlayerFloor][playerPosTileY][playerPosTileX]);
 }
 
+void MainGame::SetGhost()
+{
+	for (int i = 0; i < firstStage->enemyPos.size(); i++) {
+		int floor = firstStage->enemyPos[i]->x;
+		int y = firstStage->enemyPos[i]->y;
+		int x = firstStage->enemyPos[i]->z;
+		ghost.push_back( new Ghost(this, firstStage->tiles[floor][y][x],floor));
+	}
+}
+
 void MainGame::CheckPlayerScore()
 {
 	if (player->currentTile->type == ROAD && player->currentTile->food!= nullptr &&!player->currentTile->food->wasEaten) {
@@ -99,6 +113,33 @@ void MainGame::ProcessInput()
 	}
 	if (state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D]) {
 		player->MoveRight();
+	}
+	if (state[SDL_SCANCODE_F]) {
+		ghost[0]->behavior->Check();
+	}
+	if (state[SDL_SCANCODE_U]) {
+		if (!ghost[0]->isWalking && ghost[0]->targetCube->upTile != nullptr) {
+			ghost[0]->isWalking = true;
+			ghost[0]->targetCube = ghost[0]->targetCube->upTile;
+		}
+	}
+	if (state[SDL_SCANCODE_J]) {
+		if (!ghost[0]->isWalking && ghost[0]->targetCube->downTile != nullptr) {
+			ghost[0]->isWalking = true;
+			ghost[0]->targetCube = ghost[0]->targetCube->downTile;
+		}
+	}
+	if (state[SDL_SCANCODE_H]) {
+		if (!ghost[0]->isWalking && ghost[0]->targetCube->leftTile != nullptr) {
+			ghost[0]->isWalking = true;
+			ghost[0]->targetCube = ghost[0]->targetCube->leftTile;
+		}
+	}
+	if (state[SDL_SCANCODE_K]) {
+		if (!ghost[0]->isWalking && ghost[0]->targetCube->rightTile != nullptr) {
+			ghost[0]->isWalking = true;
+			ghost[0]->targetCube = ghost[0]->targetCube->rightTile;
+		}
 	}
 	if (state[SDL_SCANCODE_SPACE]) {
 	}
@@ -138,6 +179,7 @@ void MainGame::Update(int time)
 	glTranslatef(-(firstStage->width-1) / 2, -(currentPlayerFloor-1)*firstStage->stories/2,-firstStage->height/2);
 	firstStage->Draw();
 	player->Update();
+	for (int i = 0; i < ghost.size(); i++) ghost[i]->Update();
 	window->SwapWindow();
 	SDL_Delay(10);
 }

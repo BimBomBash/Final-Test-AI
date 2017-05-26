@@ -3,13 +3,13 @@ oXXXooXXXo
 oXSoooX0Xo
 oXXXooXXXo
 oooooooooo
-oooooooooo
+ooEooooooo
 oXXXooXXXo
 oX0XoooSXo
 oXXXooXXXo
 OooooooooO
 
-OooooooooO
+OoooEooooO
 oXXXooXXXo
 oXSooooSXo
 oXXXooXXXo
@@ -25,7 +25,7 @@ oXXXooXXXo
 oX0XoooSXo
 oXXXooXXXo
 oooooooooo
-ooooPooooo
+ooooPooEoo
 oXXXooXXXo
 oXSoooX0Xo
 oXXXooXXXo
