@@ -12,6 +12,7 @@
 #include "MainGame.h"
 #include "GhostBehavior.h"
 #include "ChaseBehavior.h"
+#include "PatrolBehavior.h"
 #include "Ghost.h"
 
 
@@ -79,7 +80,7 @@ Ghost::Ghost(MainGame * _mainGame, CubeTile * startTile, int _floor)
 	rotation = 0;
 	startTime = clock();
 	isInStair = false;
-	behavior = new ChaseBehavior(mainGame, this, mainGame->GetPlayer());
+	behavior = new PatrolBehavior(mainGame, this, mainGame->GetPlayer());
 	targetCube = currentTile;
 	isWalking = false;
 }

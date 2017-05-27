@@ -158,6 +158,7 @@
     <ClInclude Include="GhostBehavior.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Pacman.h" />
+    <ClInclude Include="PatrolBehavior.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="Pacman3D.cpp" />
+    <ClCompile Include="PatrolBehavior.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -114,33 +114,6 @@ void MainGame::ProcessInput()
 	if (state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D]) {
 		player->MoveRight();
 	}
-	if (state[SDL_SCANCODE_F]) {
-		if (!ghost[0]->behavior->isProcessing) ghost[0]->behavior->Check();
-	}
-	if (state[SDL_SCANCODE_U]) {
-		if (!ghost[0]->isWalking && ghost[0]->targetCube->upTile != nullptr) {
-			ghost[0]->isWalking = true;
-			ghost[0]->targetCube = ghost[0]->targetCube->upTile;
-		}
-	}
-	if (state[SDL_SCANCODE_J]) {
-		if (!ghost[0]->isWalking && ghost[0]->targetCube->downTile != nullptr) {
-			ghost[0]->isWalking = true;
-			ghost[0]->targetCube = ghost[0]->targetCube->downTile;
-		}
-	}
-	if (state[SDL_SCANCODE_H]) {
-		if (!ghost[0]->isWalking && ghost[0]->targetCube->leftTile != nullptr) {
-			ghost[0]->isWalking = true;
-			ghost[0]->targetCube = ghost[0]->targetCube->leftTile;
-		}
-	}
-	if (state[SDL_SCANCODE_K]) {
-		if (!ghost[0]->isWalking && ghost[0]->targetCube->rightTile != nullptr) {
-			ghost[0]->isWalking = true;
-			ghost[0]->targetCube = ghost[0]->targetCube->rightTile;
-		}
-	}
 	if (state[SDL_SCANCODE_SPACE]) {
 	}
 
