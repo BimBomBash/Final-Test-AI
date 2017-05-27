@@ -27,6 +27,7 @@ CubeTile::CubeTile(float _x, float _y, float _z, float _scale, Type _type)
 	upTile = nullptr;
 	leftTile = nullptr;
 	rightTile = nullptr;
+	dijkstraValue = NULL;
 }
 
 CubeTile::~CubeTile()

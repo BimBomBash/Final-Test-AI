@@ -1,10 +1,15 @@
 #pragma once
 #include "GhostBehavior.h"
+#include  <stack>
 class ChaseBehavior: public GhostBehavior
 {
 	Pacman *player;
+	int floor, floorX, floorY;
+	void ResetDijkstra();
+	CubeTile *playerLastPos;
+
 public:
-	int findWay(CubeTile * prev, CubeTile *root, CubeTile *_target);
+	int mapDistance(int currentDistance, CubeTile *root, CubeTile *_target);
 	void Update() override;
 	void Check() override;
 	ChaseBehavior();

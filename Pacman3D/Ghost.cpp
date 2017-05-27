@@ -108,8 +108,14 @@ void Ghost::Draw()
 void Ghost::Update()
 {
 	behavior->Update();
-	if (currentTile!=targetCube)
-	MoveToTargetTile();
-	if (mainGame->currentPlayerFloor>=floor)
-	Draw();
+	if (!isWalking && !behavior->isProcessing) {
+		if (behavior->targetCubes.size()>1) {
+			if (currentTile == behavior->targetCubes.top())behavior->targetCubes.pop();
+			targetCube = behavior->targetCubes.top();
+		}
+	}
+	if (currentTile != targetCube)
+		MoveToTargetTile();
+	if (mainGame->currentPlayerFloor >= floor)
+		Draw();
 }

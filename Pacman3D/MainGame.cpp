@@ -115,7 +115,7 @@ void MainGame::ProcessInput()
 		player->MoveRight();
 	}
 	if (state[SDL_SCANCODE_F]) {
-		ghost[0]->behavior->Check();
+		if (!ghost[0]->behavior->isProcessing) ghost[0]->behavior->Check();
 	}
 	if (state[SDL_SCANCODE_U]) {
 		if (!ghost[0]->isWalking && ghost[0]->targetCube->upTile != nullptr) {

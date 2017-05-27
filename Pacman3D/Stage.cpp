@@ -5,13 +5,7 @@
 #include <iostream>
 #include <string.h>
 #include <string>
-#include <vector>
-#include "GameObject.h"
-#include "CubeTile.h"
-#include "Wall.h"
-#include "Pacman.h"
-#include "MainGame.h"
-#include "Food.h"
+
 #include "Stage.h"
 
 

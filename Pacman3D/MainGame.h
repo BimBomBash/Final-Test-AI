@@ -32,6 +32,7 @@ public:
 	MainGame(Window * _window);
 	~MainGame();
 
+	Stage *GetStage() { return firstStage;  }
 	void Start();
 	void ProcessInput();
 	void Update(int time);

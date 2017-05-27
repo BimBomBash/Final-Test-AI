@@ -8,10 +8,10 @@ class Ghost :
 	MainGame *mainGame;
 	float speed, rotation;
 	int startTime;
-	int floor;
 	bool isInStair;
 
 public:
+	int floor;
 	GhostBehavior *behavior;
 	CubeTile *currentTile;
 	bool isWalking;

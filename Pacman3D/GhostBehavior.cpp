@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include "Ghost.h"
+#include "Stage.h"
 #include "MainGame.h"
 #include "GhostBehavior.h"
 

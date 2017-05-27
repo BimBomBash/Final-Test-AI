@@ -20,6 +20,7 @@ public:
 	void Draw();
 	void Update();
 	void DeleteFood();
+	int dijkstraValue;
 
 	CubeTile *upTile, *downTile, *leftTile, *rightTile, *topTile,*belowTile;
 };
