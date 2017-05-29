@@ -90,7 +90,7 @@ void MainGame::CheckPlayerScore()
 	if (player->currentTile->type == ROAD && player->currentTile->food!= nullptr &&!player->currentTile->food->wasEaten) {
 		if (player->currentTile->food->isBig) playerScore += 20;
 		else playerScore += 10;
-		std::cout << playerScore << std::endl;
+		//std::cout << playerScore << std::endl;
 		player->currentTile->DeleteFood();
 	}
 }
@@ -150,9 +150,11 @@ void MainGame::Update(int time)
 	glRotatef(30, 1, 0, 0);
 	glRotatef(45, 0, 1, 0);
 	glTranslatef(-(firstStage->width-1) / 2, -(currentPlayerFloor-1)*firstStage->stories/2,-firstStage->height/2);
-	player->Update();
-	for (int i = 0; i < ghost.size(); i++) ghost[i]->Update();
-	firstStage->Draw();
+	if (player->lifePoint >= 0) {
+		player->Update();
+		for (int i = 0; i < ghost.size(); i++) ghost[i]->Update();
+		firstStage->Draw();
+	}
 	window->SwapWindow();
 	SDL_Delay(10);
 }

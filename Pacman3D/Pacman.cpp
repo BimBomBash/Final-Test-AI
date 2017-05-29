@@ -40,10 +40,8 @@ void Pacman::checkStair()
 void Pacman::MoveUp()
 {
 	mainGame->currentPlayerFloor++;
-	//std::cout << currentTile->transform->position->y << std::endl;
 	currentTile = currentTile->topTile;
 	transform->position->y = currentTile->transform->position->y;
-	//std::cout << currentTile->transform->position->y << std::endl << std::endl;
 }
 
 void Pacman::MoveRight()
@@ -63,10 +61,8 @@ void Pacman::MoveRight()
 void Pacman::MoveDown()
 {
 	mainGame->currentPlayerFloor--;
-	std::cout << currentTile->transform->position->y << std::endl;
 	currentTile = currentTile->belowTile;
 	transform->position->y = currentTile->transform->position->y;
-	std::cout << currentTile->transform->position->y << std::endl << std::endl;
 }
 
 void Pacman::MoveLeft()
@@ -132,6 +128,16 @@ void Pacman::Update()
 	Draw();
 }
 
+void Pacman::Kill()
+{
+	mainGame->currentPlayerFloor = startFloor;
+	currentTile = spawnPosTile;
+	transform->position->x = currentTile->transform->position->x;
+	transform->position->y = currentTile->transform->position->y;
+	transform->position->z = currentTile->transform->position->z;
+	lifePoint--;
+}
+
 Pacman::Pacman()
 {
 	object = LoadObject("PacmanMouthOpen.obj");
@@ -145,7 +151,6 @@ Pacman::Pacman(MainGame *_mainGame, CubeTile * startTile)
 	object = LoadObject("PacmanMouthOpen.obj");
 	transform = new Transform();
 	currentTile = startTile;
-	//memcpy(currentTile, startTile, sizeof(CubeTile));
 	transform->position->x = currentTile->transform->position->x;
 	transform->position->y = currentTile->transform->position->y;
 	transform->position->z = currentTile->transform->position->z;
@@ -155,6 +160,9 @@ Pacman::Pacman(MainGame *_mainGame, CubeTile * startTile)
 	mouthOpened = true;
 	mouthTimeIntervalinSeconds = 0.1;
 	isInStair = false;
+	startFloor = mainGame->currentPlayerFloor;
+	spawnPosTile = startTile;
+	lifePoint = 3;
 }
 
 

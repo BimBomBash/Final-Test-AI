@@ -9,7 +9,9 @@ class Pacman:public GameObject
 {
 	float speed;
 	int currentFloor;
+	int startFloor;
 	CubeTile *prevTile;
+	CubeTile *spawnPosTile;
 	MovingDirection moveDir;
 	float rotation;
 	bool mouthOpened;
@@ -32,6 +34,7 @@ public:
 	void MoveBackward();
 	void Draw();
 	void Update();
+	void Kill();
 	Pacman();
 	Pacman(MainGame *_mainGame, CubeTile * startTile);
 	~Pacman();

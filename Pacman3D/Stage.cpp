@@ -143,7 +143,7 @@ void Stage::Draw()
 	for (int h = 0; h <= mainGame->currentPlayerFloor; h++) {
 		//glColor4f(0.3, 0, 0,0);
 		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) { 
+			for (int j = 0; j < width; j++) {
 				tiles[h][i][j]->Update(); 
 			}
 		}

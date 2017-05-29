@@ -36,6 +36,7 @@ CubeTile::~CubeTile()
 
 void CubeTile::Draw()
 {
+	glColor4f(0.1, 0, 0.3, 1);
 	glPushMatrix();
 	glTranslatef(transform->position->x, transform->position->y, transform->position->z);
 	glTranslatef(-0.5, -0.5, -0.5);
@@ -43,8 +44,6 @@ void CubeTile::Draw()
 		glColor4f(0, 1, 0, 0.3);
 		glScalef(1, 6, 1);
 	}
-	else glColor4f(0, 0, 0.3, 0.3);
-	//glColor3f(1, 0, 0);
 	glBegin(GL_QUADS);
 	glVertex3d(0, 0, 0);
 	glVertex3d(0, 0.5, 0);
