@@ -150,9 +150,9 @@ void MainGame::Update(int time)
 	glRotatef(30, 1, 0, 0);
 	glRotatef(45, 0, 1, 0);
 	glTranslatef(-(firstStage->width-1) / 2, -(currentPlayerFloor-1)*firstStage->stories/2,-firstStage->height/2);
-	firstStage->Draw();
 	player->Update();
 	for (int i = 0; i < ghost.size(); i++) ghost[i]->Update();
+	firstStage->Draw();
 	window->SwapWindow();
 	SDL_Delay(10);
 }

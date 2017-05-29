@@ -15,48 +15,68 @@
 
 void Ghost::MoveToTargetTile()
 {
-	if (targetCube == currentTile->leftTile) {
-		rotation = 90;
-		if (transform->position->x > currentTile->leftTile->transform->position->x) {
-			transform->position->x -= speed;
-			transform->position->z = currentTile->transform->position->z;
-		}
-		if (transform->position->x <= currentTile->leftTile->transform->position->x) {
-			currentTile = currentTile->leftTile;	
-			isWalking = false;
-		}
+	bool targetIsOccupied = false;
+	for (int i = 0; i < mainGame->GetGhost().size(); i++) {
+		if (mainGame->GetGhost()[i] != this && mainGame->GetGhost()[i]->currentTile == targetCube) targetIsOccupied = true;
 	}
-	else if (targetCube == currentTile->rightTile) {
-		rotation = 270;
-		if (transform->position->x < currentTile->rightTile->transform->position->x) {
-			transform->position->x += speed;
-			transform->position->z = currentTile->transform->position->z;
-		}
-		if (transform->position->x >= currentTile->rightTile->transform->position->x){
-			currentTile = currentTile->rightTile;
+	if (!targetIsOccupied) {
+		if (targetCube == currentTile->topTile) {
+			isWalking = true;
+			currentTile = currentTile->topTile;
+			transform->position->y = currentTile->transform->position->y;
+			floor++;
 			isWalking = false;
 		}
-	}
-	else if (targetCube == currentTile->upTile) {
-		rotation = 0;
-		if (transform->position->z > currentTile->upTile->transform->position->z) {
-			transform->position->z -= speed;
-			transform->position->x = currentTile->transform->position->x;
-		}
-		if (transform->position->z <= currentTile->upTile->transform->position->z) {
-			currentTile = currentTile->upTile;	
+		if (targetCube == currentTile->belowTile) {
+			isWalking = true;
+			currentTile = currentTile->belowTile;
+			transform->position->y = currentTile->transform->position->y;
+			floor--;
 			isWalking = false;
 		}
-	}
-	else if (targetCube == currentTile->downTile) {
-		rotation = 180;
-		if (transform->position->z < currentTile->downTile->transform->position->z) {
-			transform->position->z += speed;
-			transform->position->x = currentTile->transform->position->x;
+		if (targetCube == currentTile->leftTile) {
+			rotation = 90;
+			if (transform->position->x > currentTile->leftTile->transform->position->x) {
+				transform->position->x -= speed;
+				transform->position->z = currentTile->transform->position->z;
+			}
+			if (transform->position->x <= currentTile->leftTile->transform->position->x) {
+				currentTile = currentTile->leftTile;
+				isWalking = false;
+			}
 		}
-		if (transform->position->z >= currentTile->downTile->transform->position->z) {
-			currentTile = currentTile->downTile;
-			isWalking = false;
+		else if (targetCube == currentTile->rightTile) {
+			rotation = 270;
+			if (transform->position->x < currentTile->rightTile->transform->position->x) {
+				transform->position->x += speed;
+				transform->position->z = currentTile->transform->position->z;
+			}
+			if (transform->position->x >= currentTile->rightTile->transform->position->x) {
+				currentTile = currentTile->rightTile;
+				isWalking = false;
+			}
+		}
+		else if (targetCube == currentTile->upTile) {
+			rotation = 0;
+			if (transform->position->z > currentTile->upTile->transform->position->z) {
+				transform->position->z -= speed;
+				transform->position->x = currentTile->transform->position->x;
+			}
+			if (transform->position->z <= currentTile->upTile->transform->position->z) {
+				currentTile = currentTile->upTile;
+				isWalking = false;
+			}
+		}
+		else if (targetCube == currentTile->downTile) {
+			rotation = 180;
+			if (transform->position->z < currentTile->downTile->transform->position->z) {
+				transform->position->z += speed;
+				transform->position->x = currentTile->transform->position->x;
+			}
+			if (transform->position->z >= currentTile->downTile->transform->position->z) {
+				currentTile = currentTile->downTile;
+				isWalking = false;
+			}
 		}
 	}
 }

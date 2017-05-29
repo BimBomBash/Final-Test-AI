@@ -14,11 +14,11 @@ int GhostBehavior::CalculateClosestDistance(int currentDistance, CubeTile * root
 	if (root == _target) {
 		return 0;
 	}
-	if (root->rightTile != nullptr && root->rightTile->type == ROAD && (root->rightTile->dijkstraValue == NULL || root->rightTile->dijkstraValue >= currentDistance + 1)) {
+	if (root->rightTile != nullptr && root->rightTile->type != WALL && (root->rightTile->dijkstraValue == NULL || root->rightTile->dijkstraValue >= currentDistance + 1)) {
 		i = 1 + CalculateClosestDistance(currentDistance + 1, root->rightTile, _target);
 	}
 	else i = 100000;
-	if (root->leftTile != nullptr && root->leftTile->type == ROAD && (root->leftTile->dijkstraValue == NULL || root->leftTile->dijkstraValue >= currentDistance + 1)) {
+	if (root->leftTile != nullptr && root->leftTile->type != WALL && (root->leftTile->dijkstraValue == NULL || root->leftTile->dijkstraValue >= currentDistance + 1)) {
 		j = 1 + CalculateClosestDistance(currentDistance + 1, root->leftTile, _target);
 	}
 	else j = 100000;
@@ -26,7 +26,7 @@ int GhostBehavior::CalculateClosestDistance(int currentDistance, CubeTile * root
 		i = j;
 	}
 
-	if (root->upTile != nullptr && root->upTile->type == ROAD && (root->upTile->dijkstraValue == NULL || root->upTile->dijkstraValue >= currentDistance + 1)) {
+	if (root->upTile != nullptr && root->upTile->type != WALL && (root->upTile->dijkstraValue == NULL || root->upTile->dijkstraValue >= currentDistance + 1)) {
 		j = 1 + CalculateClosestDistance(currentDistance + 1, root->upTile, _target);
 	}
 	else j = 100000;
@@ -34,8 +34,24 @@ int GhostBehavior::CalculateClosestDistance(int currentDistance, CubeTile * root
 		i = j;
 	}
 
-	if (root->downTile != nullptr && root->downTile->type == ROAD && (root->downTile->dijkstraValue == NULL || root->downTile->dijkstraValue >= currentDistance + 1)) {
+	if (root->downTile != nullptr && root->downTile->type != WALL && (root->downTile->dijkstraValue == NULL || root->downTile->dijkstraValue >= currentDistance + 1)) {
 		j = 1 + CalculateClosestDistance(currentDistance + 1, root->downTile, _target);
+	}
+	else j = 100000;
+	if (j < i) {
+		i = j;
+	}
+
+	if (root->belowTile != nullptr && root->belowTile->type != WALL && (root->belowTile->dijkstraValue == NULL || root->belowTile->dijkstraValue >= currentDistance + 1)) {
+		j = 1 + CalculateClosestDistance(currentDistance + 1, root->belowTile, _target);
+	}
+	else j = 100000;
+	if (j < i) {
+		i = j;
+	}
+
+	if (root->topTile != nullptr && root->topTile->type != WALL && (root->topTile->dijkstraValue == NULL || root->topTile->dijkstraValue >= currentDistance + 1)) {
+		j = 1 + CalculateClosestDistance(currentDistance + 1, root->topTile, _target);
 	}
 	else j = 100000;
 	if (j < i) {

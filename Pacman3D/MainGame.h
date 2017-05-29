@@ -16,15 +16,16 @@ class MainGame
 	Stage *firstStage;
 
 	//player data
-	std::vector<Ghost*> ghost;
 	//Ghost *ghost;
 	int playerScore;
 	void CheckPlayerScore();
 	void SetPlayer();
 	void SetGhost();
 	Pacman *player;
+	std::vector<Ghost*> ghost;
 public:
 	Pacman *GetPlayer() { return player; }
+	std::vector <Ghost*> GetGhost() { return ghost; }
 	int currentPlayerFloor;
 	int playerPosTileX;
 	int playerPosTileY;

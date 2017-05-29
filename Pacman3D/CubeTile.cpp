@@ -37,11 +37,14 @@ CubeTile::~CubeTile()
 void CubeTile::Draw()
 {
 	glPushMatrix();
-	if (type == STAIR) glColor3f(0, 0, 1);
-	else glColor4f(0, 1, 0, 0.5);
-	//glColor3f(1, 0, 0);
 	glTranslatef(transform->position->x, transform->position->y, transform->position->z);
 	glTranslatef(-0.5, -0.5, -0.5);
+	if (type == STAIR) {
+		glColor4f(0, 1, 0, 0.3);
+		glScalef(1, 6, 1);
+	}
+	else glColor4f(0, 0, 0.3, 0.3);
+	//glColor3f(1, 0, 0);
 	glBegin(GL_QUADS);
 	glVertex3d(0, 0, 0);
 	glVertex3d(0, 0.5, 0);
@@ -72,12 +75,14 @@ void CubeTile::Draw()
 	glVertex3d(1, 0, 1);
 	glVertex3d(1, 0, 0);
 	glEnd();
-	glBegin(GL_QUADS);
-	glVertex3d(0, 0.5, 0);
-	glVertex3d(0, 0.5, 1);
-	glVertex3d(1, 0.5, 1);
-	glVertex3d(1, 0.5, 0);
-	glEnd();
+	if (type != STAIR) {
+		glBegin(GL_QUADS);
+		glVertex3d(0, 0.5, 0);
+		glVertex3d(0, 0.5, 1);
+		glVertex3d(1, 0.5, 1);
+		glVertex3d(1, 0.5, 0);
+		glEnd();
+	}
 	glPopMatrix();
 }
 
@@ -85,6 +90,7 @@ void CubeTile::Update()
 {
 	//glTranslatef(0, 0, -4);
 	if (food != nullptr) food->Update();
+	if (belowTile==nullptr)
 	Draw();
 }
 

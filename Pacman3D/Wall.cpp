@@ -99,7 +99,7 @@ Wall::Wall(CubeTile * _tile, float _height, float _width, bool _left, bool _up, 
 void Wall::Draw()
 {
 	glPushMatrix();
-	glColor4f(0.0, 0.0, 0.4, 0.5);
+	glColor4f(0.0, 0.0, 0.6, 0.5);
 	DrawTube(10);
 	if (left) DrawCube(2);
 	if (up) DrawCube(1);

@@ -40,10 +40,10 @@ void Pacman::checkStair()
 void Pacman::MoveUp()
 {
 	mainGame->currentPlayerFloor++;
-	std::cout << currentTile->transform->position->y << std::endl;
+	//std::cout << currentTile->transform->position->y << std::endl;
 	currentTile = currentTile->topTile;
 	transform->position->y = currentTile->transform->position->y;
-	std::cout << currentTile->transform->position->y << std::endl << std::endl;
+	//std::cout << currentTile->transform->position->y << std::endl << std::endl;
 }
 
 void Pacman::MoveRight()
