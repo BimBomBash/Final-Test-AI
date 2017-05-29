@@ -114,6 +114,7 @@ void Pacman::MoveBackward()
 void Pacman::Draw()
 {
 	glPushMatrix();
+	glColor3f(1.0, 1.0, 0);
 	glTranslatef(transform->position->x, transform->position->y, transform->position->z);
 	glRotatef(rotation, 0, 1, 0);
 	glRotatef(180, 0, 1, 0);

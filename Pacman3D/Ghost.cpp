@@ -10,18 +10,13 @@
 #include <fstream>
 #include "GameObject.h"
 #include "MainGame.h"
-#include "GhostBehavior.h"
-#include "ChaseBehavior.h"
-#include "PatrolBehavior.h"
 #include "Ghost.h"
 
 
 void Ghost::MoveToTargetTile()
 {
-	std::cout << "Is Moving" << std::endl;
 	if (targetCube == currentTile->leftTile) {
 		rotation = 90;
-			std::cout << "Moving left" << std::endl;
 		if (transform->position->x > currentTile->leftTile->transform->position->x) {
 			transform->position->x -= speed;
 			transform->position->z = currentTile->transform->position->z;
@@ -80,7 +75,9 @@ Ghost::Ghost(MainGame * _mainGame, CubeTile * startTile, int _floor)
 	rotation = 0;
 	startTime = clock();
 	isInStair = false;
-	behavior = new PatrolBehavior(mainGame, this, mainGame->GetPlayer());
+	patrolBehavior = new PatrolBehavior(mainGame, this, mainGame->GetPlayer());
+	chaseBehavior = new ChaseBehavior(mainGame, this, mainGame->GetPlayer());
+	ToPatrolBehavior();
 	targetCube = currentTile;
 	isWalking = false;
 }
@@ -92,6 +89,16 @@ Ghost::Ghost()
 
 Ghost::~Ghost()
 {
+}
+
+void Ghost::ToChaseBehavior()
+{
+	behavior = chaseBehavior;
+}
+
+void Ghost::ToPatrolBehavior()
+{
+	behavior = patrolBehavior;
 }
 
 void Ghost::Draw()

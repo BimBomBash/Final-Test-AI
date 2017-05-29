@@ -93,12 +93,14 @@ void Stage::BuildMap(std::string map) {
 					temp->floorNumber = h;
 					walls.push_back(temp);
 				}
+				if (tiles[h][i][j]->type == STAIR) {
+					if (h > 0 && tiles[h - 1][i][j]->type == STAIR) tiles[h][i][j]->belowTile = tiles[h - 1][i][j];
+					if (h < stories - 1 && tiles[h + 1][i][j]->type == STAIR) tiles[h][i][j]->topTile = tiles[h + 1][i][j];
+				}
 				if (i > 0) tiles[h][i][j]->upTile = tiles[h][i - 1][j];
 				if (i < height - 1) tiles[h][i][j]->downTile = tiles[h][i + 1][j];
 				if (j > 0) tiles[h][i][j]->leftTile = tiles[h][i][j - 1];
 				if (j < width - 1) tiles[h][i][j]->rightTile = tiles[h][i][j + 1];
-				if (h > 0) tiles[h][i][j]->belowTile = tiles[h - 1][i][j];
-				if (h < stories - 1) tiles[h][i][j]->topTile = tiles[h + 1][i][j];
 			}
 		}
 	}

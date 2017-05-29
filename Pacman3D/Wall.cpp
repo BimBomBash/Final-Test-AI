@@ -14,7 +14,6 @@
 void Wall::DrawCube(int direction)
 {
 	glPushMatrix();
-	glColor3f(1.0, 0.8, 0.0);
 	glTranslatef(transform->position->x, transform->position->y, transform->position->z);
 	glRotatef(90 * direction, 0, 1, 0);
 	//glTranslatef(0.5, 0, 0.5);
@@ -64,7 +63,6 @@ void Wall::DrawTube(int segments)
 	glPushMatrix();
 
 	glTranslatef(transform->position->x, transform->position->y, transform->position->z);
-	glColor3f(1.0, 0.8, 0.0);
 	float angleInterval = (float)360 / (float)segments;
 	for (int i = 0; i < segments; i++) {
 		float Z1 = sin(angleInterval*i)*width/2;
@@ -101,11 +99,13 @@ Wall::Wall(CubeTile * _tile, float _height, float _width, bool _left, bool _up, 
 void Wall::Draw()
 {
 	glPushMatrix();
+	glColor4f(0.0, 0.0, 0.4, 0.5);
 	DrawTube(10);
 	if (left) DrawCube(2);
 	if (up) DrawCube(1);
 	if (right) DrawCube(0);
 	if (down) DrawCube(3);
+	glPopAttrib();
 }
 
 void Wall::Update()

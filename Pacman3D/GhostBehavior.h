@@ -12,6 +12,7 @@ protected:
 	int floor, floorX, floorY;
 	Pacman *player;
 	CubeTile *playerLastPos;
+
 public:
 	int CalculateClosestDistance(int currentDistance, CubeTile * root, CubeTile *_target);
 	int GetClosestDistance(int currentDistance, CubeTile * root, CubeTile *_target);

@@ -2,6 +2,10 @@
 #include "GameObject.h"
 #include "GhostBehavior.h"
 #include "CubeTile.h"
+#include "GhostBehavior.h"
+#include "ChaseBehavior.h"
+#include "PatrolBehavior.h"
+
 class Ghost :
 	public GameObject
 {
@@ -9,7 +13,8 @@ class Ghost :
 	float speed, rotation;
 	int startTime;
 	bool isInStair;
-
+	ChaseBehavior *chaseBehavior;
+	PatrolBehavior *patrolBehavior;
 public:
 	int floor;
 	GhostBehavior *behavior;
@@ -21,6 +26,8 @@ public:
 	Ghost();
 	~Ghost();
 
+	void ToChaseBehavior();
+	void ToPatrolBehavior();
 	void Draw();
 	void Update();
 };
